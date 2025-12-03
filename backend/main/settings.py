@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
 from pathlib import Path
 from dotenv import load_dotenv
 import os
@@ -27,13 +26,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-7%+lu1z7k_b)sqpe-ucg_^q7!-8br8x0%i8uky$bwl8uw9g@-d'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+FRONTEND_BUILD_DIR = BASE_DIR / 'dist'
 
 # Application definition
 
@@ -88,14 +84,13 @@ WSGI_APPLICATION = 'main.wsgi.application'
 
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv("POSTGRES_DB"),
-        'USER': os.getenv("POSTGRES_USER"),
-        'PASSWORD': os.getenv("POSTGRES_PASSWORD"),
-        'HOST': os.getenv("POSTGRES_HOST"),
-        'PORT': os.getenv("POSTGRES_PORT"),
-    }
+'default': {
+'ENGINE': 'django.db.backends.mysql',
+'NAME': os.getenv("MYSQL_DB"),
+'USER': os.getenv("MYSQL_USER"),
+'HOST': os.getenv("MYSQL_HOST"),
+'PORT': os.getenv("MYSQL_PORT"),
+}
 }
 
 
@@ -117,6 +112,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+DEBUG = False
+ALLOWED_HOSTS = ['vadymprogpy.pythonanywhere.com']
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -136,8 +133,6 @@ CORS_ALLOWED_ORIGINS = [
 ]
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
