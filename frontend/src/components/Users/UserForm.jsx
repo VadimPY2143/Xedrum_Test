@@ -58,9 +58,7 @@ export default function UserForm() {
             <Form
                 form={form}
                 layout="vertical"
-                onFinish={onFinish}
-                initialValues={{ group: "user" }}
-            >
+                onFinish={onFinish}>
                 <Form.Item
                     name="username"
                     label="Username"
