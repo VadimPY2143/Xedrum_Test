@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Form, Input, Button, Select, Card, message } from "antd";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { usersAPI, groupsAPI } from "../../urls/routing";
 
 export default function UserForm() {
     const [form] = Form.useForm();
@@ -11,7 +11,7 @@ export default function UserForm() {
 
     async function loadGroups() {
         try {
-            const res = await axios.get("http://localhost:8000/api/groups/");
+            const res = await groupsAPI.getAll();
             setGroups(res.data);
         } catch (error) {
             console.error("Error loading groups:", error);
@@ -21,7 +21,7 @@ export default function UserForm() {
 
     async function loadUser() {
         try {
-            const res = await axios.get(`http://localhost:8000/api/users/${id}/`);
+            const res = await usersAPI.getById(id);
             form.setFieldsValue({
                 username: res.data.username,
                 group: res.data.group,
@@ -40,10 +40,10 @@ export default function UserForm() {
     async function onFinish(values) {
         try {
             if (id) {
-                await axios.put(`http://localhost:8000/api/users/${id}/`, values);
+                await usersAPI.update(id, values);
                 message.success("User updated successfully");
             } else {
-                await axios.post("http://localhost:8000/api/users/", values);
+                await usersAPI.create(values);
                 message.success("User created successfully");
             }
             navigate("/");

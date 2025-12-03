@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Form, Input, Button, Card, message } from "antd";
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
+import { groupsAPI } from "../../urls/routing";
 
 export default function GroupForm() {
     const [form] = Form.useForm();
@@ -10,7 +10,7 @@ export default function GroupForm() {
 
     async function loadGroup() {
         try {
-            const res = await axios.get(`http://localhost:8000/api/groups/${id}/`);
+            const res = await groupsAPI.getById(id);
             form.setFieldsValue({
                 name: res.data.name,
                 description: res.data.description,
@@ -28,10 +28,10 @@ export default function GroupForm() {
     async function onFinish(values) {
         try {
             if (id) {
-                await axios.put(`http://localhost:8000/api/groups/${id}/`, values);
+                await groupsAPI.update(id, values);
                 message.success("Group updated successfully");
             } else {
-                await axios.post("http://localhost:8000/api/groups/", values);
+                await groupsAPI.create(values);
                 message.success("Group created successfully");
             }
             navigate("/groups");

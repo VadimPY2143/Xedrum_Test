@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { Table, Button, Space } from "antd";
+import { Table, Button, Space, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { usersAPI } from "../../urls/routing";
 
 export default function UserList() {
     const [users, setUsers] = useState([]);
@@ -9,19 +9,22 @@ export default function UserList() {
 
     async function loadUsers() {
         try {
-            const res = await axios.get("http://localhost:8000/api/users/");
+            const res = await usersAPI.getAll();
             setUsers(res.data);
         } catch (error) {
             console.error("Error loading users:", error);
+            message.error("Failed to load users");
         }
     }
 
     async function deleteUser(id) {
         try {
-            await axios.delete(`http://localhost:8000/api/users/${id}/`);
+            await usersAPI.delete(id);
+            message.success("User deleted successfully");
             loadUsers();
         } catch (error) {
             console.error("Error deleting user:", error);
+            message.error("Failed to delete user");
         }
     }
 

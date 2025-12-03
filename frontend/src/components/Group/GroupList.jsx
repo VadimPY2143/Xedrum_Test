@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Table, Button, Space, message } from "antd";
 import { useNavigate } from "react-router-dom";
+import { groupsAPI } from "../../urls/routing";
 
 export default function GroupList() {
     const [groups, setGroups] = useState([]);
@@ -9,7 +9,7 @@ export default function GroupList() {
 
     async function loadGroups() {
         try {
-            const res = await axios.get("http://localhost:8000/api/groups/");
+            const res = await groupsAPI.getAll();
             setGroups(res.data);
         } catch (error) {
             console.error("Error loading groups:", error);
@@ -19,7 +19,7 @@ export default function GroupList() {
 
     async function deleteGroup(id) {
         try {
-            await axios.delete(`http://localhost:8000/api/groups/${id}/`);
+            await groupsAPI.delete(id);
             message.success("Group deleted successfully");
             loadGroups();
         } catch (error) {

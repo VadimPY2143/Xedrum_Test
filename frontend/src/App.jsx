@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import { Layout, Menu } from "antd";
-import UserList from "./UserList";
-import UserForm from "./UserForm";
-import GroupList from "./GroupList";
-import GroupForm from "./GroupForm";
+import UserList from "./components/Users/UserList.jsx";
+import UserForm from "./components/Users/UserForm.jsx";
+import GroupList from "./components/Group/GroupList.jsx";
+import GroupForm from "./components/Group/GroupForm.jsx";
 
 const { Header, Content } = Layout;
 
